@@ -17,6 +17,12 @@ dependencies:
   workmanager: ^0.10.7
   workmanager_web: ^0.2.0
 
+# workmanager_apple 0.9.10 references Xcode 26 BackgroundTasks symbols even
+# when building with the currently hosted Xcode toolchain. 0.9.9 implements the
+# same iOS/macOS plugin contract without that unavailable API surface.
+dependency_overrides:
+  workmanager_apple: 0.9.9
+
 dev_dependencies:
   flutter_lints: ^6.0.0
   flutter_test:

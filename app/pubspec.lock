@@ -444,13 +444,13 @@ packages:
     source: hosted
     version: "0.10.6"
   workmanager_apple:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: workmanager_apple
-      sha256: "15558fb54415a010910c3529eaf8f61f94d23903dac620331895c472602d6f6e"
+      sha256: "0516856e2c640ca98673c53a1dd07f164d55d51e02d065d4637df73bdf38191e"
       url: "https://pub.dev"
     source: hosted
-    version: "0.9.10"
+    version: "0.9.9"
   workmanager_linux:
     dependency: transitive
     description:
