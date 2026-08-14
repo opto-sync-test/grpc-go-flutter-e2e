@@ -1,0 +1,53 @@
+name: Go Flutter gRPC E2E
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  integration:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out recursively
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          submodules: recursive
+
+      - name: Set up Go
+        uses: actions/setup-go@c0137caad775660c0844396c52da96e560aba63d # v6.0.0
+        with:
+          go-version: '1.24.3'
+          cache-dependency-path: server/go.sum
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
+        with:
+          flutter-version: '3.44.2'
+          channel: stable
+          cache: true
+
+      - name: Verify pinned source revisions
+        run: |
+          python3 -m json.tool opto-sync-pin.json >/dev/null
+          test "$(git -C vendor/opto-sync-clients rev-parse HEAD)" = "$(python3 -c 'import json; print(json.load(open("opto-sync-pin.json"))["optoSyncClients"]["commit"])')"
+          test "$(git -C vendor/opto-sync-clients/syncer.c rev-parse HEAD)" = "$(python3 -c 'import json; print(json.load(open("opto-sync-pin.json"))["syncerCore"]["commit"])')"
+
+      - name: Test and build the Go server
+        working-directory: server
+        run: |
+          go mod verify
+          go test ./...
+          mkdir -p ../.build
+          go build -o ../.build/grpc-server ./cmd/server
+
+      - name: Test the Flutter client across gRPC
+        working-directory: app
+        run: |
+          flutter pub get
+          dart format --output=none --set-exit-if-changed test
+          flutter analyze
+          flutter test

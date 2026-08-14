@@ -1,0 +1,10 @@
+{
+  "optoSyncClients": {
+    "repository": "https://github.com/opto-sync/opto-sync-clients.git",
+    "commit": "c6afeb415cfc9ff2f488bb52dd8b4af64c2e0d04"
+  },
+  "syncerCore": {
+    "repository": "https://github.com/opto-sync/syncer.c.git",
+    "commit": "db05525d1b9b98649de1186144e552640c7a6101"
+  }
+}

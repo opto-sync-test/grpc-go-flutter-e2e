@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package optosync.v1;
+
+option go_package = "github.com/opto-sync-test/grpc-go-flutter-e2e/server/gen;syncv1";
+
+service SyncService {
+  rpc Health(HealthRequest) returns (HealthResponse);
+  rpc Merge(MergeRequest) returns (MergeResponse);
+}
+
+message HealthRequest {}
+
+message HealthResponse {
+  string core_version = 1;
+}
+
+message MergeRequest {
+  string base_json = 1;
+  string incoming_json = 2;
+}
+
+message MergeResponse {
+  string merged_json = 1;
+  string core_version = 2;
+}
