@@ -100,7 +100,9 @@ jobs:
           flutter build linux --release
 
   flutter-apple:
-    runs-on: macos-15
+    # workmanager_apple exercises BGContinuedProcessingTask, an iOS 26 API.
+    # The macOS 26 image supplies Xcode 26 and the matching BackgroundTasks SDK.
+    runs-on: macos-26
     timeout-minutes: 45
     steps:
       - name: Check out recursively
