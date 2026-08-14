@@ -7,6 +7,7 @@ option go_package = "github.com/opto-sync-test/grpc-go-flutter-e2e/server/gen;sy
 service SyncService {
   rpc Health(HealthRequest) returns (HealthResponse);
   rpc Merge(MergeRequest) returns (MergeResponse);
+  rpc Sync(stream SyncRequest) returns (stream SyncResponse);
 }
 
 message HealthRequest {}
@@ -23,4 +24,18 @@ message MergeRequest {
 message MergeResponse {
   string merged_json = 1;
   string core_version = 2;
+}
+
+message SyncRequest {
+  string lane = 1;
+  uint64 sequence = 2;
+  string base_json = 3;
+  string incoming_json = 4;
+}
+
+message SyncResponse {
+  string lane = 1;
+  uint64 sequence = 2;
+  string merged_json = 3;
+  string core_version = 4;
 }

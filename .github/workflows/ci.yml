@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
   pull_request:
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -11,6 +12,7 @@ permissions:
 jobs:
   integration:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Check out recursively
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -48,6 +50,103 @@ jobs:
         working-directory: app
         run: |
           flutter pub get
-          dart format --output=none --set-exit-if-changed test
+          dart format --output=none --set-exit-if-changed lib test web/background.dart
           flutter analyze
           flutter test
+
+      - name: Verify the committed web worker bundle is reproducible
+        working-directory: app
+        run: |
+          dart compile js --no-source-maps -O2 web/background.dart -o /tmp/background.dart.js
+          cmp /tmp/background.dart.js web/background.dart.js
+
+  flutter-linux-android-web:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - name: Check out recursively
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          submodules: recursive
+          persist-credentials: false
+
+      - name: Set up Java
+        uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
+        with:
+          flutter-version: '3.44.2'
+          channel: stable
+          cache: true
+
+      - name: Install Linux desktop build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev
+
+      - name: Materialize platform shells and build web, Android, and Linux
+        working-directory: app
+        run: |
+          flutter create --platforms=android,web,linux --org dev.optosync.test --project-name grpc_go_flutter_e2e .
+          flutter pub get
+          flutter build web --release
+          test -s build/web/workmanager_service_worker.js
+          test -s build/web/background.dart.js
+          flutter build apk --debug
+          flutter build linux --release
+
+  flutter-apple:
+    runs-on: macos-15
+    timeout-minutes: 45
+    steps:
+      - name: Check out recursively
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          submodules: recursive
+          persist-credentials: false
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
+        with:
+          flutter-version: '3.44.2'
+          channel: stable
+          cache: true
+
+      - name: Materialize and build iOS and macOS shells
+        working-directory: app
+        run: |
+          flutter create --platforms=ios,macos --org dev.optosync.test --project-name grpc_go_flutter_e2e .
+          flutter pub get
+          plutil -lint ios/Runner/Info.plist
+          grep -q '<string>fetch</string>' ios/Runner/Info.plist
+          grep -q 'IPHONEOS_DEPLOYMENT_TARGET = 14.0' ios/Runner.xcodeproj/project.pbxproj
+          flutter build ios --simulator
+          flutter build macos --release
+
+  flutter-windows:
+    runs-on: windows-latest
+    timeout-minutes: 40
+    steps:
+      - name: Check out recursively
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          submodules: recursive
+          persist-credentials: false
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
+        with:
+          flutter-version: '3.44.2'
+          channel: stable
+          cache: true
+
+      - name: Materialize and build the Windows desktop shell
+        working-directory: app
+        run: |
+          flutter create --platforms=windows --org dev.optosync.test --project-name grpc_go_flutter_e2e .
+          flutter pub get
+          flutter build windows --release

@@ -63,3 +63,37 @@ const MergeResponse$json = {
 final $typed_data.Uint8List mergeResponseDescriptor = $convert.base64Decode(
     'Cg1NZXJnZVJlc3BvbnNlEh8KC21lcmdlZF9qc29uGAEgASgJUgptZXJnZWRKc29uEiEKDGNvcm'
     'VfdmVyc2lvbhgCIAEoCVILY29yZVZlcnNpb24=');
+
+@$core.Deprecated('Use syncRequestDescriptor instead')
+const SyncRequest$json = {
+  '1': 'SyncRequest',
+  '2': [
+    {'1': 'lane', '3': 1, '4': 1, '5': 9, '10': 'lane'},
+    {'1': 'sequence', '3': 2, '4': 1, '5': 4, '10': 'sequence'},
+    {'1': 'base_json', '3': 3, '4': 1, '5': 9, '10': 'baseJson'},
+    {'1': 'incoming_json', '3': 4, '4': 1, '5': 9, '10': 'incomingJson'},
+  ],
+};
+
+/// Descriptor for `SyncRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List syncRequestDescriptor = $convert.base64Decode(
+    'CgtTeW5jUmVxdWVzdBISCgRsYW5lGAEgASgJUgRsYW5lEhoKCHNlcXVlbmNlGAIgASgEUghzZX'
+    'F1ZW5jZRIbCgliYXNlX2pzb24YAyABKAlSCGJhc2VKc29uEiMKDWluY29taW5nX2pzb24YBCAB'
+    'KAlSDGluY29taW5nSnNvbg==');
+
+@$core.Deprecated('Use syncResponseDescriptor instead')
+const SyncResponse$json = {
+  '1': 'SyncResponse',
+  '2': [
+    {'1': 'lane', '3': 1, '4': 1, '5': 9, '10': 'lane'},
+    {'1': 'sequence', '3': 2, '4': 1, '5': 4, '10': 'sequence'},
+    {'1': 'merged_json', '3': 3, '4': 1, '5': 9, '10': 'mergedJson'},
+    {'1': 'core_version', '3': 4, '4': 1, '5': 9, '10': 'coreVersion'},
+  ],
+};
+
+/// Descriptor for `SyncResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List syncResponseDescriptor = $convert.base64Decode(
+    'CgxTeW5jUmVzcG9uc2USEgoEbGFuZRgBIAEoCVIEbGFuZRIaCghzZXF1ZW5jZRgCIAEoBFIIc2'
+    'VxdWVuY2USHwoLbWVyZ2VkX2pzb24YAyABKAlSCm1lcmdlZEpzb24SIQoMY29yZV92ZXJzaW9u'
+    'GAQgASgJUgtjb3JlVmVyc2lvbg==');

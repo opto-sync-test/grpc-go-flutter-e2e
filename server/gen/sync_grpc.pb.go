@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	SyncService_Health_FullMethodName = "/optosync.v1.SyncService/Health"
 	SyncService_Merge_FullMethodName  = "/optosync.v1.SyncService/Merge"
+	SyncService_Sync_FullMethodName   = "/optosync.v1.SyncService/Sync"
 )
 
 // SyncServiceClient is the client API for SyncService service.
@@ -29,6 +30,7 @@ const (
 type SyncServiceClient interface {
 	Health(ctx context.Context, in *HealthRequest, opts ...grpc.CallOption) (*HealthResponse, error)
 	Merge(ctx context.Context, in *MergeRequest, opts ...grpc.CallOption) (*MergeResponse, error)
+	Sync(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[SyncRequest, SyncResponse], error)
 }
 
 type syncServiceClient struct {
@@ -59,12 +61,26 @@ func (c *syncServiceClient) Merge(ctx context.Context, in *MergeRequest, opts ..
 	return out, nil
 }
 
+func (c *syncServiceClient) Sync(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[SyncRequest, SyncResponse], error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &SyncService_ServiceDesc.Streams[0], SyncService_Sync_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &grpc.GenericClientStream[SyncRequest, SyncResponse]{ClientStream: stream}
+	return x, nil
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type SyncService_SyncClient = grpc.BidiStreamingClient[SyncRequest, SyncResponse]
+
 // SyncServiceServer is the server API for SyncService service.
 // All implementations must embed UnimplementedSyncServiceServer
 // for forward compatibility.
 type SyncServiceServer interface {
 	Health(context.Context, *HealthRequest) (*HealthResponse, error)
 	Merge(context.Context, *MergeRequest) (*MergeResponse, error)
+	Sync(grpc.BidiStreamingServer[SyncRequest, SyncResponse]) error
 	mustEmbedUnimplementedSyncServiceServer()
 }
 
@@ -80,6 +96,9 @@ func (UnimplementedSyncServiceServer) Health(context.Context, *HealthRequest) (*
 }
 func (UnimplementedSyncServiceServer) Merge(context.Context, *MergeRequest) (*MergeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Merge not implemented")
+}
+func (UnimplementedSyncServiceServer) Sync(grpc.BidiStreamingServer[SyncRequest, SyncResponse]) error {
+	return status.Errorf(codes.Unimplemented, "method Sync not implemented")
 }
 func (UnimplementedSyncServiceServer) mustEmbedUnimplementedSyncServiceServer() {}
 func (UnimplementedSyncServiceServer) testEmbeddedByValue()                     {}
@@ -138,6 +157,13 @@ func _SyncService_Merge_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SyncService_Sync_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(SyncServiceServer).Sync(&grpc.GenericServerStream[SyncRequest, SyncResponse]{ServerStream: stream})
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type SyncService_SyncServer = grpc.BidiStreamingServer[SyncRequest, SyncResponse]
+
 // SyncService_ServiceDesc is the grpc.ServiceDesc for SyncService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -154,6 +180,13 @@ var SyncService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _SyncService_Merge_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "Sync",
+			Handler:       _SyncService_Sync_Handler,
+			ServerStreams: true,
+			ClientStreams: true,
+		},
+	},
 	Metadata: "sync.proto",
 }

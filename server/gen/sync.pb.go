@@ -205,6 +205,142 @@ func (x *MergeResponse) GetCoreVersion() string {
 	return ""
 }
 
+type SyncRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Lane          string                 `protobuf:"bytes,1,opt,name=lane,proto3" json:"lane,omitempty"`
+	Sequence      uint64                 `protobuf:"varint,2,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	BaseJson      string                 `protobuf:"bytes,3,opt,name=base_json,json=baseJson,proto3" json:"base_json,omitempty"`
+	IncomingJson  string                 `protobuf:"bytes,4,opt,name=incoming_json,json=incomingJson,proto3" json:"incoming_json,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SyncRequest) Reset() {
+	*x = SyncRequest{}
+	mi := &file_sync_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SyncRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SyncRequest) ProtoMessage() {}
+
+func (x *SyncRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_sync_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SyncRequest.ProtoReflect.Descriptor instead.
+func (*SyncRequest) Descriptor() ([]byte, []int) {
+	return file_sync_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *SyncRequest) GetLane() string {
+	if x != nil {
+		return x.Lane
+	}
+	return ""
+}
+
+func (x *SyncRequest) GetSequence() uint64 {
+	if x != nil {
+		return x.Sequence
+	}
+	return 0
+}
+
+func (x *SyncRequest) GetBaseJson() string {
+	if x != nil {
+		return x.BaseJson
+	}
+	return ""
+}
+
+func (x *SyncRequest) GetIncomingJson() string {
+	if x != nil {
+		return x.IncomingJson
+	}
+	return ""
+}
+
+type SyncResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Lane          string                 `protobuf:"bytes,1,opt,name=lane,proto3" json:"lane,omitempty"`
+	Sequence      uint64                 `protobuf:"varint,2,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	MergedJson    string                 `protobuf:"bytes,3,opt,name=merged_json,json=mergedJson,proto3" json:"merged_json,omitempty"`
+	CoreVersion   string                 `protobuf:"bytes,4,opt,name=core_version,json=coreVersion,proto3" json:"core_version,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SyncResponse) Reset() {
+	*x = SyncResponse{}
+	mi := &file_sync_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SyncResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SyncResponse) ProtoMessage() {}
+
+func (x *SyncResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_sync_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SyncResponse.ProtoReflect.Descriptor instead.
+func (*SyncResponse) Descriptor() ([]byte, []int) {
+	return file_sync_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *SyncResponse) GetLane() string {
+	if x != nil {
+		return x.Lane
+	}
+	return ""
+}
+
+func (x *SyncResponse) GetSequence() uint64 {
+	if x != nil {
+		return x.Sequence
+	}
+	return 0
+}
+
+func (x *SyncResponse) GetMergedJson() string {
+	if x != nil {
+		return x.MergedJson
+	}
+	return ""
+}
+
+func (x *SyncResponse) GetCoreVersion() string {
+	if x != nil {
+		return x.CoreVersion
+	}
+	return ""
+}
+
 var File_sync_proto protoreflect.FileDescriptor
 
 const file_sync_proto_rawDesc = "" +
@@ -220,10 +356,22 @@ const file_sync_proto_rawDesc = "" +
 	"\rMergeResponse\x12\x1f\n" +
 	"\vmerged_json\x18\x01 \x01(\tR\n" +
 	"mergedJson\x12!\n" +
-	"\fcore_version\x18\x02 \x01(\tR\vcoreVersion2\x90\x01\n" +
+	"\fcore_version\x18\x02 \x01(\tR\vcoreVersion\"\x7f\n" +
+	"\vSyncRequest\x12\x12\n" +
+	"\x04lane\x18\x01 \x01(\tR\x04lane\x12\x1a\n" +
+	"\bsequence\x18\x02 \x01(\x04R\bsequence\x12\x1b\n" +
+	"\tbase_json\x18\x03 \x01(\tR\bbaseJson\x12#\n" +
+	"\rincoming_json\x18\x04 \x01(\tR\fincomingJson\"\x82\x01\n" +
+	"\fSyncResponse\x12\x12\n" +
+	"\x04lane\x18\x01 \x01(\tR\x04lane\x12\x1a\n" +
+	"\bsequence\x18\x02 \x01(\x04R\bsequence\x12\x1f\n" +
+	"\vmerged_json\x18\x03 \x01(\tR\n" +
+	"mergedJson\x12!\n" +
+	"\fcore_version\x18\x04 \x01(\tR\vcoreVersion2\xd1\x01\n" +
 	"\vSyncService\x12A\n" +
 	"\x06Health\x12\x1a.optosync.v1.HealthRequest\x1a\x1b.optosync.v1.HealthResponse\x12>\n" +
-	"\x05Merge\x12\x19.optosync.v1.MergeRequest\x1a\x1a.optosync.v1.MergeResponseBAZ?github.com/opto-sync-test/grpc-go-flutter-e2e/server/gen;syncv1b\x06proto3"
+	"\x05Merge\x12\x19.optosync.v1.MergeRequest\x1a\x1a.optosync.v1.MergeResponse\x12?\n" +
+	"\x04Sync\x12\x18.optosync.v1.SyncRequest\x1a\x19.optosync.v1.SyncResponse(\x010\x01BAZ?github.com/opto-sync-test/grpc-go-flutter-e2e/server/gen;syncv1b\x06proto3"
 
 var (
 	file_sync_proto_rawDescOnce sync.Once
@@ -237,20 +385,24 @@ func file_sync_proto_rawDescGZIP() []byte {
 	return file_sync_proto_rawDescData
 }
 
-var file_sync_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_sync_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_sync_proto_goTypes = []any{
 	(*HealthRequest)(nil),  // 0: optosync.v1.HealthRequest
 	(*HealthResponse)(nil), // 1: optosync.v1.HealthResponse
 	(*MergeRequest)(nil),   // 2: optosync.v1.MergeRequest
 	(*MergeResponse)(nil),  // 3: optosync.v1.MergeResponse
+	(*SyncRequest)(nil),    // 4: optosync.v1.SyncRequest
+	(*SyncResponse)(nil),   // 5: optosync.v1.SyncResponse
 }
 var file_sync_proto_depIdxs = []int32{
 	0, // 0: optosync.v1.SyncService.Health:input_type -> optosync.v1.HealthRequest
 	2, // 1: optosync.v1.SyncService.Merge:input_type -> optosync.v1.MergeRequest
-	1, // 2: optosync.v1.SyncService.Health:output_type -> optosync.v1.HealthResponse
-	3, // 3: optosync.v1.SyncService.Merge:output_type -> optosync.v1.MergeResponse
-	2, // [2:4] is the sub-list for method output_type
-	0, // [0:2] is the sub-list for method input_type
+	4, // 2: optosync.v1.SyncService.Sync:input_type -> optosync.v1.SyncRequest
+	1, // 3: optosync.v1.SyncService.Health:output_type -> optosync.v1.HealthResponse
+	3, // 4: optosync.v1.SyncService.Merge:output_type -> optosync.v1.MergeResponse
+	5, // 5: optosync.v1.SyncService.Sync:output_type -> optosync.v1.SyncResponse
+	3, // [3:6] is the sub-list for method output_type
+	0, // [0:3] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -267,7 +419,7 @@ func file_sync_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_sync_proto_rawDesc), len(file_sync_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -12,6 +12,7 @@
 
 import 'dart:core' as $core;
 
+import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
@@ -238,6 +239,190 @@ class MergeResponse extends $pb.GeneratedMessage {
   $core.bool hasCoreVersion() => $_has(1);
   @$pb.TagNumber(2)
   void clearCoreVersion() => $_clearField(2);
+}
+
+class SyncRequest extends $pb.GeneratedMessage {
+  factory SyncRequest({
+    $core.String? lane,
+    $fixnum.Int64? sequence,
+    $core.String? baseJson,
+    $core.String? incomingJson,
+  }) {
+    final result = create();
+    if (lane != null) result.lane = lane;
+    if (sequence != null) result.sequence = sequence;
+    if (baseJson != null) result.baseJson = baseJson;
+    if (incomingJson != null) result.incomingJson = incomingJson;
+    return result;
+  }
+
+  SyncRequest._();
+
+  factory SyncRequest.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory SyncRequest.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'SyncRequest',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'optosync.v1'),
+      createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'lane')
+    ..a<$fixnum.Int64>(
+        2, _omitFieldNames ? '' : 'sequence', $pb.PbFieldType.OU6,
+        defaultOrMaker: $fixnum.Int64.ZERO)
+    ..aOS(3, _omitFieldNames ? '' : 'baseJson')
+    ..aOS(4, _omitFieldNames ? '' : 'incomingJson')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SyncRequest clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SyncRequest copyWith(void Function(SyncRequest) updates) =>
+      super.copyWith((message) => updates(message as SyncRequest))
+          as SyncRequest;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static SyncRequest create() => SyncRequest._();
+  @$core.override
+  SyncRequest createEmptyInstance() => create();
+  @$core.pragma('dart2js:noInline')
+  static SyncRequest getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<SyncRequest>(create);
+  static SyncRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get lane => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set lane($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasLane() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearLane() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $fixnum.Int64 get sequence => $_getI64(1);
+  @$pb.TagNumber(2)
+  set sequence($fixnum.Int64 value) => $_setInt64(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasSequence() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearSequence() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get baseJson => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set baseJson($core.String value) => $_setString(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasBaseJson() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearBaseJson() => $_clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get incomingJson => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set incomingJson($core.String value) => $_setString(3, value);
+  @$pb.TagNumber(4)
+  $core.bool hasIncomingJson() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearIncomingJson() => $_clearField(4);
+}
+
+class SyncResponse extends $pb.GeneratedMessage {
+  factory SyncResponse({
+    $core.String? lane,
+    $fixnum.Int64? sequence,
+    $core.String? mergedJson,
+    $core.String? coreVersion,
+  }) {
+    final result = create();
+    if (lane != null) result.lane = lane;
+    if (sequence != null) result.sequence = sequence;
+    if (mergedJson != null) result.mergedJson = mergedJson;
+    if (coreVersion != null) result.coreVersion = coreVersion;
+    return result;
+  }
+
+  SyncResponse._();
+
+  factory SyncResponse.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory SyncResponse.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'SyncResponse',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'optosync.v1'),
+      createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'lane')
+    ..a<$fixnum.Int64>(
+        2, _omitFieldNames ? '' : 'sequence', $pb.PbFieldType.OU6,
+        defaultOrMaker: $fixnum.Int64.ZERO)
+    ..aOS(3, _omitFieldNames ? '' : 'mergedJson')
+    ..aOS(4, _omitFieldNames ? '' : 'coreVersion')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SyncResponse clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SyncResponse copyWith(void Function(SyncResponse) updates) =>
+      super.copyWith((message) => updates(message as SyncResponse))
+          as SyncResponse;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static SyncResponse create() => SyncResponse._();
+  @$core.override
+  SyncResponse createEmptyInstance() => create();
+  @$core.pragma('dart2js:noInline')
+  static SyncResponse getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<SyncResponse>(create);
+  static SyncResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get lane => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set lane($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasLane() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearLane() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $fixnum.Int64 get sequence => $_getI64(1);
+  @$pb.TagNumber(2)
+  set sequence($fixnum.Int64 value) => $_setInt64(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasSequence() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearSequence() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get mergedJson => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set mergedJson($core.String value) => $_setString(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasMergedJson() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearMergedJson() => $_clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get coreVersion => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set coreVersion($core.String value) => $_setString(3, value);
+  @$pb.TagNumber(4)
+  $core.bool hasCoreVersion() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearCoreVersion() => $_clearField(4);
 }
 
 const $core.bool _omitFieldNames =

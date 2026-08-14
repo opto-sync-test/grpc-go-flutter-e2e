@@ -2,4 +2,10 @@
 app/.dart_tool/
 app/.flutter-plugins-dependencies
 app/build/
+app/ios/Flutter/Generated.xcconfig
+app/ios/Flutter/ephemeral/
+app/ios/Flutter/flutter_export_environment.sh
+app/ios/Runner/GeneratedPluginRegistrant.h
+app/ios/Runner/GeneratedPluginRegistrant.m
+app/web/*.deps
 server/grpc-server

@@ -46,6 +46,13 @@ class SyncServiceClient extends $grpc.Client {
     return $createUnaryCall(_$merge, request, options: options);
   }
 
+  $grpc.ResponseStream<$0.SyncResponse> sync(
+    $async.Stream<$0.SyncRequest> request, {
+    $grpc.CallOptions? options,
+  }) {
+    return $createStreamingCall(_$sync, request, options: options);
+  }
+
   // method descriptors
 
   static final _$health =
@@ -57,6 +64,10 @@ class SyncServiceClient extends $grpc.Client {
       '/optosync.v1.SyncService/Merge',
       ($0.MergeRequest value) => value.writeToBuffer(),
       $0.MergeResponse.fromBuffer);
+  static final _$sync = $grpc.ClientMethod<$0.SyncRequest, $0.SyncResponse>(
+      '/optosync.v1.SyncService/Sync',
+      ($0.SyncRequest value) => value.writeToBuffer(),
+      $0.SyncResponse.fromBuffer);
 }
 
 @$pb.GrpcServiceName('optosync.v1.SyncService')
@@ -78,6 +89,13 @@ abstract class SyncServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.MergeRequest.fromBuffer(value),
         ($0.MergeResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.SyncRequest, $0.SyncResponse>(
+        'Sync',
+        sync,
+        true,
+        true,
+        ($core.List<$core.int> value) => $0.SyncRequest.fromBuffer(value),
+        ($0.SyncResponse value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.HealthResponse> health_Pre(
@@ -95,4 +113,7 @@ abstract class SyncServiceBase extends $grpc.Service {
 
   $async.Future<$0.MergeResponse> merge(
       $grpc.ServiceCall call, $0.MergeRequest request);
+
+  $async.Stream<$0.SyncResponse> sync(
+      $grpc.ServiceCall call, $async.Stream<$0.SyncRequest> request);
 }

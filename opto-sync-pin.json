@@ -6,5 +6,6 @@
   "syncerCore": {
     "repository": "https://github.com/opto-sync/syncer.c.git",
     "commit": "db05525d1b9b98649de1186144e552640c7a6101"
-  }
+  },
+  "testBoundary": "Go OptoSync core over bidirectional multiplex gRPC plus Flutter Workmanager on web, mobile, and desktop"
 }
