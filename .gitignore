@@ -9,3 +9,9 @@ app/ios/Runner/GeneratedPluginRegistrant.h
 app/ios/Runner/GeneratedPluginRegistrant.m
 app/web/*.deps
 server/grpc-server
+
+# Repository-local temporary data and authorized Git worktrees
+tmp
+temp
+tmp/worktrees
+temp/worktrees
